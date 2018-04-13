@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>脚手架本地存储</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .red{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 v-html='msg'></h1>
+        <input type="text" v-model='newItem' @keyup.enter='addItem'>
+        <ul v-for='item in items'>
+            <li v-html='item.label' @click='changeColor(item)' :class='{red : item.isColor}'></li>
+        </ul>
+    </div>
+    <script>
+
+        const STORAGE_KEY="vue";
+        function fetch(){
+            return JSON.parse(window.localStorage.getItem(STORAGE_KEY)||'[]');
+        }
+        function save (items){
+            window.localStorage.setItem(STORAGE_KEY,JSON.stringify(items));
+        }
+
+        new Vue({
+            el : '#app',
+            data : {
+                msg : 'this is my first Vue-test!',
+                items : fetch() == null ? []: fetch(),
+                newItem : ''
+            },
+            watch : {
+                items:{
+                    handler : function(items){
+                        save(items);
+                    },
+                    deep : true
+                }
+            },
+            methods : {
+                changeColor(item){
+                    item.isColor = !item.isColor;
+                },
+                addItem(){
+                    this.items.push({
+                        label : this.newItem,
+                        isColor : false
+                    });
+                    this.newItem = '';
+                }
+            }
+        })
+    </script>
+</body>
+</html>
