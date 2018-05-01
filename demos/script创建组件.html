@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>script</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<my-app></my-app>
+	</div>
+
+	<script type="text/template" id="my-app">
+		<h1>script模板</h1>
+	</script>
+
+	<script>
+		Vue.component('my-app',{
+			template : '#my-app'
+		});
+
+		new Vue({
+			el : '#app'
+		});
+	</script>
+</body>
+</html>

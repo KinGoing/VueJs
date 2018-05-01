@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>组件通信 多层简化</title>
+</head>
+<body>
+	<div id="app">
+		<parent :imgsrc='imgsrc' :imgtitle='imgtitle'></parent>
+	</div>
+
+	<script src="js/vue.js"></script>
+	<script>
+		//不推荐这种写法
+		let child1 = Vue.extend({
+			props : ['imgsrc'],
+			template : `
+						<img :src="imgsrc" alt="demo" width="100">
+
+						`
+		});
+
+		let child2 = Vue.extend({
+			props : ['imgtitle'],
+			template : `
+						<h2>{{imgtitle}}</h2>
+						`
+		});
+
+		Vue.component('parent',{
+			props : ['imgsrc','imgtitle'],
+			components : {
+				'c1' : child1,
+				'c2' : child2
+			},
+			template : `
+						<div>
+							<c1 :imgsrc='imgsrc'></c1>
+							<c2 :imgtitle='imgtitle'></c2>
+						</div>
+						`
+		});
+
+		new Vue({
+			el : '#app',
+			data : {
+				imgsrc : '1.jpg',
+				imgtitle : '个人头像'
+			}
+		});
+	</script>
+</body>
+</html>

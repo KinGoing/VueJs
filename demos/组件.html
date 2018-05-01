@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<Parent></Parent>
+	</div>
+
+	<script>
+		//父子组件
+		let Child1 = Vue.extend({
+		  template : `
+		            <input type="text" />
+		              `
+		});
+		let Child2 = Vue.extend({
+		  template : `
+		            <button>选择</button>
+		              `
+		});
+		Vue.component('Parent',{
+		  components : {
+		    'my-child1' : Child1,
+		    'my-child2' : Child2,
+		  },
+		  template : `
+		              <div>
+		                <my-child1></my-child1>
+		                <my-child2></my-child2>
+		              </div>
+		              `
+		});
+		new Vue({
+			el : '#app'
+		});
+	</script>
+</body>
+</html>

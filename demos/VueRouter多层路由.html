@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>VueRouter多层</title>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 使用 router-link 组件来导航. -->
+            <!-- 通过传入 `to` 属性指定链接. -->
+            <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+            <router-link to="/html5">html5</router-link>
+            <router-link to="/css3">css3</router-link>
+            <router-link to="/java">java</router-link>
+            <h2>
+                <!-- 路由出口 -->
+                <!-- 路由匹配到的组件将渲染在这里 -->
+                <router-view></router-view>
+            </h2>
+        </div>
+
+        <template id="html5">
+            <div>
+                <h1>HTML5</h1>
+                <p>是前端最基础的知识了！</p>
+                <div>
+                    <ul>
+                        <li><router-link to="/html5/basic">基础</router-link></li>
+                        <li><router-link to="/html5/pro">进阶</router-link></li>
+                    </ul>
+                    <h3><router-view></router-view></h3>
+                </div>
+            </div>
+        </template>
+        
+        <template id="basic">
+            <div>
+                <h4>比较基础的知识</h4>
+                <p>难度较低</p>
+            </div>
+        </template>
+        
+        <template id="pro">
+            <div>
+                <h4>比较进阶的知识</h4>
+                <p>难度较高</p>
+            </div>
+        </template>
+
+        <template id="css3">
+            <div>
+                <h1>Css3</h1>
+                <p>这也是是前端最基础的知识了！</p>
+            </div>
+        </template>
+
+        <template id="java">
+            <div>
+                <h1>JAVA</h1>
+                <p>一直很火的语言！</p>
+            </div>
+        </template>
+
+        <script src="js/vue.js"></script>
+        <script src="js/vue-router.js"></script>
+        <script type="text/javascript">
+            //1.创建组件
+            // 可以从其他文件 import 进来
+            const Html5 = Vue.extend({
+                template: '#html5'
+            });
+            const Css3 = Vue.extend({
+                template: '#css3'
+            });
+            const Java = Vue.extend({
+                template: '#java'
+            });
+            const Basic = Vue.extend({
+                template : '#basic'
+            });
+            const Pro = Vue.extend({
+                template : '#pro'
+            });
+
+            //2.定义路由
+            // 每个路由应该映射一个组件。 其中"component" 可以是
+            // 通过 Vue.extend() 创建的组件构造器，
+            // 或者，只是一个组件配置对象。
+            const routes = [{
+                    path: '/html5',
+                    component: Html5,
+                    children : [{
+                        path : 'basic',
+                        component : Basic
+                    },
+                    {
+                        path : 'pro',
+                        component : Pro
+                    },
+                    {
+                        //默认显示。重定向的方法
+                        path: '/',
+                        redirect: 'basic'
+                    }]
+                },
+                {
+                    path: '/css3',
+                    component: Css3
+                },
+                {
+                    path: '/java',
+                    component: Java
+                },
+                {
+                    //默认显示。重定向的方法
+                    path: '/',
+                    redirect: '/html5'
+                }
+            ];
+
+            //3.创建路由实例
+            const router = new VueRouter({
+                routes  //缩写等同于 routes : routes
+            });
+
+            //4.创建Vue实例，并挂载
+            // 记得要通过 router 配置参数注入路由，
+            // 从而让整个应用都有路由功能
+            new Vue({
+                router
+            }).$mount('#app');
+        </script>
+    </body>
+</html>

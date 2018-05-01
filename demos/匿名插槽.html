@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>匿名插槽</title>
+</head>
+<body>
+	<div id="app">
+		<my-pc>
+			<img src="1.jpg" alt="">
+			<h2>能插多个不一样的标签哦</h2>
+			<input type="color">
+		</my-pc>
+	</div>
+
+	<!-- 注意：不能只用slot，他可能会是多个标签，所以需要用标签包一下 -->
+	<template id="my-pc">
+		<div>
+			<h1>下面是一个匿名插槽</h1>
+			<slot>这里是匿名插槽点，没有东西的话默认显示这段话</slot>
+		</div>
+	</template>
+
+	<script src="js/vue.js"></script>
+	<script>
+
+		Vue.component('my-pc',{
+			template : '#my-pc'
+		});
+
+		new Vue({
+			el : '#app'
+		});
+	</script>
+</body>
+</html>

@@ -1,11 +1,11 @@
--Vue×é¼şµÄÖØÒªÑ¡Ïî£º
+-Vueç»„ä»¶çš„é‡è¦é€‰é¡¹ï¼š
 
-1.data£ºÊı¾İ
-2.methods£º·½·¨
-3.watch£º¼àÌı
+1.dataï¼šæ•°æ®
+2.methodsï¼šæ–¹æ³•
+3.watchï¼šç›‘å¬
 
 
-eg£º
+egï¼š
 new Vue({
   data:{
     a:1,
@@ -23,7 +23,7 @@ new Vue({
   }
 })
 
--Ä£°åÖ¸Áî
+-æ¨¡æ¿æŒ‡ä»¤
 
 1.v-text
 2.v-html
@@ -54,7 +54,7 @@ _eg:
   },
 </script>
 
--v-onÊÂ¼ş°ó¶¨
+-v-onäº‹ä»¶ç»‘å®š
 
 <button v-on:click='doThis'></button>
 <button @click='doThis'></button>
@@ -65,7 +65,7 @@ methods:{
   }
 }
 
--v-bindÊôĞÔ°ó¶¨
+-v-bindå±æ€§ç»‘å®š
 
 <img v-bind:src='imageSrc'>
 
@@ -85,42 +85,42 @@ export default{
   }
 }
 
---Ä£°å
+--æ¨¡æ¿
 var name = new Vue({
     el : '#id',
     data : {
-      //Êı¾İ
+      //æ•°æ®
     },
     filter :{
-      //¾Ö²¿¹ıÂËÆ÷
+      //å±€éƒ¨è¿‡æ»¤å™¨
     },
     mounted: function () {
       this.$nextTick(function () {
-        // ´úÂë±£Ö¤ this.$el ÔÚ document ÖĞ
+        // ä»£ç ä¿è¯ this.$el åœ¨ document ä¸­
       })
     },
     wathch : {
-      //¼àÌı
+      //ç›‘å¬
     },
     methods : {
-      //ÊÂ¼ş·½·¨
+      //äº‹ä»¶æ–¹æ³•
     },
 });
 
---¹ıÂËÆ÷filter
-1.¾Ö²¿¹ıÂËÆ÷
+--è¿‡æ»¤å™¨filter
+1.å±€éƒ¨è¿‡æ»¤å™¨
 filters:{
   formatMoney : function(value){
     return '&yen;' + value.toFixed(2);
   }
 }
-2.È«¾Ö¹ıÂËÆ÷
+2.å…¨å±€è¿‡æ»¤å™¨
 Vue.filter('formatMoney' , function(value,type){
   return '&yen;' + value.toFixed(2) + type;
 })
 
---v-htmlÌí¼Ó¹ıÂËÆ÷
-¶¨Òå·½·¨
+--v-htmlæ·»åŠ è¿‡æ»¤å™¨
+å®šä¹‰æ–¹æ³•
     methods: {  
         formatTrend(val) {  
           let trend = 'up';  
@@ -132,5 +132,76 @@ Vue.filter('formatMoney' , function(value,type){
         }  
     }  
 
-µ÷ÓÃ·½·¨
+è°ƒç”¨æ–¹æ³•
     <span v-html="formatTrend(value)"></span> 
+
+
+----------ç»„ä»¶-------------
+<å…¨å±€ç»„ä»¶>
+-1.åˆ›å»ºç»„ä»¶æ„é€ å™¨
+let Profile = Vue.extend({
+  -1.1æ¨¡æ¿é€‰é¡¹
+  template : `
+            <div>
+              <input type="date" />
+              <p>ä»Šå¤©å·²ç»æ˜¯å†¬å¤©äº†ï¼</p>
+            </div>
+              `
+});
+-2.æ³¨å†Œä¸€ä¸ªå…¨å±€çš„ç»„ä»¶
+Vue.component('my-data',Profile);
+-3.htmlå®ä¾‹åŒ–
+<my-data></my-data>
+
+<å±€éƒ¨ç»„ä»¶>
+-1.åˆ›å»ºç»„ä»¶æ„é€ å™¨
+let Profile = Vue.extend({
+  -1.1æ¨¡æ¿é€‰é¡¹
+  template : `
+            <div>
+              <input type="date" />
+              <p>ä»Šå¤©å·²ç»æ˜¯å†¬å¤©äº†ï¼</p>
+            </div>
+              `
+});
+-2.æ³¨å†Œä¸€ä¸ªå±€éƒ¨çš„ç»„ä»¶
+component ï¼š {
+  'my-data' ï¼š Profile
+}
+-3.htmlå®ä¾‹åŒ–
+<my-data></my-data>
+
+ï¼ï¼ç®€å†™æ³•
+Vue.component('my-data',{
+  template : `
+            <div>
+              <input type="date" />
+              <p>ä»Šå¤©å·²ç»æ˜¯å†¬å¤©äº†ï¼</p>
+            </div>
+              `
+});
+
+--çˆ¶å­ç»„ä»¶
+let Child1 = Vue.extend({
+  template : `
+            <input type="text" />
+              `
+});
+let Child2 = Vue.extend({
+  template : `
+            <button>é€‰æ‹©</button>
+              `
+});
+Vue.component('Parent',{
+  components : {
+    'my-child1' : Child1,
+    'my-child2' : Child2,
+  }
+  template : `
+              <div>
+                <my-child1></my-child1>
+                <my-child2></my-child2>
+              </div>
+              `
+});
+<Parent></Parent>

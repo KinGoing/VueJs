@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>template</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<my-app></my-app>
+		<my-app></my-app>
+	</div>
+	
+	<template id="my-app">
+		<div>
+			<h1>template模板</h1>
+			<button @click='msg++'>点击了{{msg}}次</button>
+		</div>
+	</template>
+
+	<script>
+		//实例化组件
+		Vue.component('my-app',{
+			template : '#my-app',
+			//方法传递return data 组件间数据不混淆
+			data() {
+				return {
+					msg : 0
+				}
+			}
+		});
+
+		new Vue({
+			el : '#app'
+		});
+	</script>
+</body>
+</html>

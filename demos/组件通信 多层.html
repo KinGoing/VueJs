@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>组件通信 多层</title>
+</head>
+<body>
+	<div id="app">
+		<parent :imgsrc='imgsrc' :imgtitle='imgtitle'></parent>
+	</div>
+
+	<template id="my-img">
+		<img :src="imgsrc" alt="demo" width="100">
+	</template>
+	
+	<template id="my-title">
+		<h2>{{imgtitle}}</h2>
+	</template>
+
+	<template id="parent">
+		<div>
+			<c1 :imgsrc='imgsrc'></c1>
+			<c2 :imgtitle='imgtitle'></c2>
+		</div>
+	</template>
+
+	<script src="js/vue.js"></script>
+	<script>
+		
+		let child1 = Vue.extend({
+			props : ['imgsrc'],
+			template : '#my-img'
+		});
+
+		let child2 = Vue.extend({
+			props : ['imgtitle'],
+			template : '#my-title'
+		});
+
+		Vue.component('parent',{
+			props : ['imgsrc','imgtitle'],
+			components : {
+				'c1' : child1,
+				'c2' : child2
+			},
+			template : '#parent'
+		});
+
+		new Vue({
+			el : '#app',
+			data : {
+				imgsrc : '1.jpg',
+				imgtitle : '个人头像'
+			}
+		});
+	</script>
+</body>
+</html>
