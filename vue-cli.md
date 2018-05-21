@@ -31,15 +31,101 @@ npm run build
 ```
 --------------------------------------------------
 
-#推荐项目结构
+# 推荐项目结构
 
 ```
 src:
-	\api		(数据接口)
-	\assets		(静态数据)
-	\common		(公用文件)
-	\utils		(工具、插件)
-	\view		(视图路由)
-	\components	(组件)
-	\app.vue
-	\main.js/router.js
+	\api\			(数据接口)
+	\assets\		(静态数据)
+	\common\		(公用文件)
+	\utils\			(工具、插件)
+	\view\			(视图路由)
+	\components\	(组件)
+	\app.vue		(入口)
+	\main.js		(js入口)
+	\router.js		(路由配置)
+```
+
+## 文件关联
+
++ app.vue
+入口文件 一般是最大的框架文件
+
++ components\
+组件文件 .vue
+```
+<template></template>
+
+<script>
+export default {
+  name: 'HelloWorld',
+  props: {
+    msg: String
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped></style>
+```
+
++ view\
+路由文件 .vue
+```
+<template>
+	<HelloWorld msg="Welcome to Your Vue.js App"/>
+</template>
+
+<script>
+// @ is an alias to /src
+import HelloWorld from '@/components/HelloWorld.vue'
+
+export default {
+  name: 'home',
+  components: {
+    HelloWorld
+  }
+}
+</script>
+```
+
++ main.js
+js文件的入口
+```
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+
+Vue.config.productionTip = false
+
+new Vue({
+  router,
+  render: h => h(App)
+}).$mount('#app')
+```
+
++ router.js
+路由配置文件
+```
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from './views/Home.vue'
+import About from './views/About.vue'
+
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
+    }
+  ]
+})
+```
