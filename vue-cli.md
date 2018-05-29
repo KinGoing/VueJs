@@ -129,3 +129,24 @@ export default new Router({
   ]
 })
 ```
+
+--------------------------------------------------
+
+# 打包上线
+
++ 优化-打包大小分析
+```
+	npm run build --report
+```
+
++ file协议打开
+
+1.安装 node-static
+```
+	npm install node-static -g
+```
+
+2.开启static——本地可测试
+```
+	static dist
+```
